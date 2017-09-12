@@ -80,12 +80,33 @@ class PendingVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //let done = Todo()
-        print(UserDefaults.standard.array(forKey: "DoneArray") as Any)
+        let alert = UIAlertController(
+            title: "Are you done?",
+            message: "are you really sure You are Done?",
+            preferredStyle: .alert)
         
-        todo.moveToDoneArray(indexPath.row)
+        // Add a "cancel" button to the alert. This one doesn't need a handler
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
-        print(UserDefaults.standard.array(forKey: "DoneArray") as Any)
+        alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
+            
+            let getDone = self.pendingArray?[indexPath.row]
+            
+            self.todo.SwitchLocal(getDone as! String, .done)
+            self.pendingArray?.remove(at: indexPath.row)
+            
+            tableView.beginUpdates()
+            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.endUpdates()
+            
+            print("Done Array", UserDefaults.standard.array(forKey: "DoneArray") as Any)
+            
+            self.todo.editPendingDefaults(self.pendingArray!)
+            
+        }))
+        
+        // Present the alert to the user
+        self.present(alert, animated: true, completion: nil)
     }
     
     @IBAction func addToDo(_ sender: Any) {
