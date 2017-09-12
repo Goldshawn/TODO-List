@@ -11,8 +11,6 @@ import Foundation
 class Todo {
     
     private var _todoName: String!
-    private var _pendingArray = ["I'm The first of my name", "Who are You", "Fido dido", "And your name is?", "Schambach is asleep"]
-    private var _doneArray = [String]()
     
     let myUserDefaults = UserDefaults.standard
     
@@ -24,39 +22,25 @@ class Todo {
         return _todoName
     }
     
-//    var pendingArray: [String] {
-//        return _pendingArray
-//    }
-//    
-//    var doneArray: [String] {
-//        return _doneArray
-//    }
     
-    init() {
+    func editPendingDefaults(_ currentPending: Array<Any>) {
         
-        myUserDefaults.set(_pendingArray, forKey: "PendingArray")
-        myUserDefaults.set(_doneArray, forKey: "DoneArray")
+        myUserDefaults.set(currentPending, forKey: "PendingArray")
         
     }
     
-    func addNewTodo(_ todo: String) {
+    func editDoneDefaults(_ currentPending: Array<Any>) {
         
-        _pendingArray.append(todo)
-        myUserDefaults.set(_pendingArray, forKey: "PendingArray")
-    }
-    
-    func deleteFromPending(_ indexOf: Int){
-        
-        _pendingArray.remove(at: indexOf)
+        myUserDefaults.set(currentPending, forKey: "DoneArray")
         
     }
     
-    
-    func moveToDoneArray(indexOf: Int) {
+    func moveToDoneArray(_ indexOf: Int) {
         
         _doneArray.append(_pendingArray[indexOf])
         _pendingArray.remove(at: indexOf)
-        
+        editPendingDefaults(_pendingArray)
+        editDoneDefaults(_doneArray)
         
     }
 }

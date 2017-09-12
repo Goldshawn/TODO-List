@@ -34,7 +34,7 @@ class PendingVC: UITableViewController {
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         
-        return pendingArray!.count
+        return (pendingArray?.count)!
         
     }
 
@@ -68,11 +68,6 @@ class PendingVC: UITableViewController {
         
         if editingStyle == .delete {
             // Delete the row from the data source
-//           todo.deleteFromPending(indexPath.row, {
-//            tableView.beginUpdates()
-//            tableView.deleteRows(at: [indexPath], with: .fade)
-//            tableView.endUpdates()
-//           })
             
             self.pendingArray!.remove(at: indexPath.row)
             
@@ -81,14 +76,16 @@ class PendingVC: UITableViewController {
             tableView.endUpdates()
             
         }
+        todo.editPendingDefaults(pendingArray!)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let done = Todo()
+        //let done = Todo()
+        print(UserDefaults.standard.array(forKey: "DoneArray") as Any)
         
-        done.moveToDoneArray(indexOf: indexPath.row)
+        todo.moveToDoneArray(indexPath.row)
         
-        self.tableView.reloadData()
+        print(UserDefaults.standard.array(forKey: "DoneArray") as Any)
     }
     
     @IBAction func addToDo(_ sender: Any) {
@@ -122,43 +119,20 @@ class PendingVC: UITableViewController {
     private func addNewToDoItem(_ title: String)
     {
         // The index of the new item will be the current item count
-        let newIndex = pendingArray!.count - 1
+        let newIndex = pendingArray!.count
         
         // Create new item and add it to the todo items list
         
-        todo.addNewTodo(title)
-    
-        print(UserDefaults.standard.array(forKey: "PendingArray") as Any)
+        self.pendingArray!.append(title)
+        
         // Tell the table view a new row has been created
-//        tableView.beginUpdates()
-//        tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .automatic)
-//        tableView.endUpdates()
-        //tableView.insertRows(at: [IndexPath], with: .top)
+        tableView.beginUpdates()
+        tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .automatic)
+        tableView.endUpdates()
+        
+        todo.editPendingDefaults(pendingArray!)
+        
     }
 
-    /*
-    // Override to support rearranging the table view.
-    override func tableView(_ tableView: UITableView, moveRowAt fromIndexPath: IndexPath, to: IndexPath) {
-
-    }
-    */
-
-    /*
-    // Override to support conditional rearranging of the table view.
-    override func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the item to be re-orderable.
-        return true
-    }
-    */
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }
