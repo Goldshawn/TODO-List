@@ -38,13 +38,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doneCell" rowHeight="70" id="eli-ad-VXV">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="doneCell" rowHeight="70" id="eli-ad-VXV" customClass="forTest" customModule="TODO_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="eli-ad-VXV" id="Xy2-JT-Jes">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999998807907104" translatesAutoresizingMaskIntoConstraints="NO" id="06Q-Bd-RiW">
+                                            <rect key="frame" x="10" y="10" width="300" height="49.5"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                            <color key="textColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="trailing" secondItem="06Q-Bd-RiW" secondAttribute="trailing" constant="10" id="Eij-1C-m40"/>
+                                        <constraint firstAttribute="bottom" secondItem="06Q-Bd-RiW" secondAttribute="bottom" constant="10" id="L3a-cw-rdf"/>
+                                        <constraint firstItem="06Q-Bd-RiW" firstAttribute="leading" secondItem="Xy2-JT-Jes" secondAttribute="leading" constant="10" id="NR2-Oi-dYY"/>
+                                        <constraint firstItem="06Q-Bd-RiW" firstAttribute="top" secondItem="Xy2-JT-Jes" secondAttribute="top" constant="10" id="j28-OS-si0"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="todoLabel" destination="06Q-Bd-RiW" id="e9i-yE-Sb4"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>

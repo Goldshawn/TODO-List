@@ -10,10 +10,15 @@ import Foundation
 
 class Todo {
     
+    enum toWhere: String {
+        case pending = "pending"
+        case done = "done"
+    }
+    
     private var _todoName: String!
     
-    let myUserDefaults = UserDefaults.standard
-    
+    private let myUserDefaults = UserDefaults.standard
+    private var almostThere = [String]()
     
     var todoName: String {
         if _todoName == nil{
@@ -25,22 +30,39 @@ class Todo {
     
     func editPendingDefaults(_ currentPending: Array<Any>) {
         
-        myUserDefaults.set(currentPending, forKey: "PendingArray")
+        var tempPendingArray = UserDefaults.standard.array(forKey: "PendingArray")
+        tempPendingArray?.append(currentPending)
+        
+        myUserDefaults.set(tempPendingArray, forKey: "PendingArray")
         
     }
     
-    func editDoneDefaults(_ currentPending: Array<Any>) {
+    func editDoneDefaults(_ currentDone: Array<Any>) {
         
-        myUserDefaults.set(currentPending, forKey: "DoneArray")
+        var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
+        tempDoneArray?.append(currentDone)
+        
+        myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
         
     }
     
-    func moveToDoneArray(_ indexOf: Int) {
+    func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
         
-        _doneArray.append(_pendingArray[indexOf])
-        _pendingArray.remove(at: indexOf)
-        editPendingDefaults(_pendingArray)
-        editDoneDefaults(_doneArray)
+        if switchCase == .done {
+            
+            almostThere.append(gettingDone)
+            editDoneDefaults(almostThere)
+            
+        } else if switchCase == .pending {
+            
+            almostThere.append(gettingDone)
+            editPendingDefaults(almostThere)
+        }
+        
+//        _doneArray.append(_pendingArray[indexOf])
+//        _pendingArray.remove(at: indexOf)
+//        editPendingDefaults(currentPending)
+//        editDoneDefaults(currentDone)
         
     }
 }
