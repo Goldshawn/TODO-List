@@ -10,6 +10,12 @@ import Foundation
 
 class Todo {
     
+    enum toWhere: String {
+        case pending = "pending"
+        case done = "done"
+    }
+    
+    private var almostThere = [String]()
     private var _todoName: String!
     
     let myUserDefaults = UserDefaults.standard
@@ -35,12 +41,18 @@ class Todo {
         
     }
     
-    func moveToDoneArray(_ indexOf: Int) {
+    func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
         
-        _doneArray.append(_pendingArray[indexOf])
-        _pendingArray.remove(at: indexOf)
-        editPendingDefaults(_pendingArray)
-        editDoneDefaults(_doneArray)
+        if switchCase == .done {
+            
+            almostThere.append(gettingDone)
+            editDoneDefaults(almostThere)
+            
+        } else if switchCase == .pending {
+            
+            almostThere.append(gettingDone)
+            editPendingDefaults(almostThere)
+        }
         
     }
 }
