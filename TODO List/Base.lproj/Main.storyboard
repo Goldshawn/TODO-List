@@ -15,19 +15,21 @@
                 <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="kGS-1X-cdn" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" id="3Ec-6O-s4J">
+                        <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
                         <autoresizingMask key="autoresizingMask"/>
-                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
                     </tabBar>
                     <connections>
-                        <segue destination="msY-gu-zEO" kind="relationship" relationship="viewControllers" id="BQo-pp-Jbx"/>
-                        <segue destination="eb8-TB-8Ug" kind="relationship" relationship="viewControllers" id="moA-AP-loB"/>
+                        <segue destination="0K5-YS-Ij1" kind="relationship" relationship="viewControllers" id="BQo-pp-Jbx"/>
+                        <segue destination="swn-hd-Efd" kind="relationship" relationship="viewControllers" id="moA-AP-loB"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9ub-ku-xHx" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.875" y="138.38028169014083"/>
         </scene>
-        <!--Done-->
+        <!--DoneVC-->
         <scene sceneID="Ice-JT-aT6">
             <objects>
                 <tableViewController id="eb8-TB-8Ug" customClass="DoneVC" customModule="TODO_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -50,13 +52,13 @@
                             <outlet property="delegate" destination="eb8-TB-8Ug" id="iIc-Ws-5al"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Done" id="gdM-yM-3fh"/>
+                    <navigationItem key="navigationItem" id="PKq-on-Fvv"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="QPb-xy-CK3" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1158.75" y="492.25352112676057"/>
+            <point key="canvasLocation" x="2156.25" y="492.25352112676057"/>
         </scene>
-        <!--Pending-->
+        <!--PendingVC-->
         <scene sceneID="U78-de-g0C">
             <objects>
                 <tableViewController id="msY-gu-zEO" customClass="PendingVC" customModule="TODO_List" customModuleProvider="target" sceneMemberID="viewController">
@@ -65,13 +67,30 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pendingCell" rowHeight="70" id="VXI-52-cz3">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="pendingCell" rowHeight="70" id="VXI-52-cz3" customClass="TableCellForTODO" customModule="TODO_List" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="320" height="70"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="VXI-52-cz3" id="3sJ-ij-B5i">
                                     <rect key="frame" x="0.0" y="0.0" width="320" height="70"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Text" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="3m2-Qd-V0J">
+                                            <rect key="frame" x="10" y="10" width="300" height="49.5"/>
+                                            <fontDescription key="fontDescription" name="Avenir-Book" family="Avenir" pointSize="20"/>
+                                            <color key="textColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="3m2-Qd-V0J" firstAttribute="leading" secondItem="3sJ-ij-B5i" secondAttribute="leading" constant="10" id="6w3-cj-yei"/>
+                                        <constraint firstItem="3m2-Qd-V0J" firstAttribute="top" secondItem="3sJ-ij-B5i" secondAttribute="top" constant="10" id="OVU-90-KPX"/>
+                                        <constraint firstAttribute="bottom" secondItem="3m2-Qd-V0J" secondAttribute="bottom" constant="10" id="jAa-5A-l84"/>
+                                        <constraint firstAttribute="trailing" secondItem="3m2-Qd-V0J" secondAttribute="trailing" constant="10" id="pbK-9U-6Fa"/>
+                                    </constraints>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <outlet property="todoLabel" destination="3m2-Qd-V0J" id="RkH-3m-OVS"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -79,11 +98,61 @@
                             <outlet property="delegate" destination="msY-gu-zEO" id="dNj-p4-D42"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Pending" id="7sN-N0-nj1"/>
+                    <navigationItem key="navigationItem" id="eSm-SH-aKr">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="0We-Ou-JRq">
+                            <connections>
+                                <action selector="addToDo:" destination="msY-gu-zEO" id="ACL-HR-yPh"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ufu-B1-bp2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="2156.25" y="-300"/>
+        </scene>
+        <!--Pending-->
+        <scene sceneID="CF5-Af-eB3">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0K5-YS-Ij1" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Pending" id="7sN-N0-nj1"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="EZK-IY-QyX">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                        <color key="tintColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="1" green="0.40000000000000002" blue="0.20000000000000001" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="msY-gu-zEO" kind="relationship" relationship="rootViewController" id="hsU-Kd-6Um"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZiG-5I-jDE" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
             <point key="canvasLocation" x="1158.75" y="-300"/>
+        </scene>
+        <!--Done-->
+        <scene sceneID="hR3-ii-LVh">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="swn-hd-Efd" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Done" id="gdM-yM-3fh"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Sk-5Y-S5O">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="eb8-TB-8Ug" kind="relationship" relationship="rootViewController" id="bxS-gL-I7H"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YLU-zW-K65" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1158.75" y="492.25352112676057"/>
         </scene>
     </scenes>
 </document>
