@@ -16,15 +16,14 @@ class PendingVC: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
+        
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-         self.navigationItem.leftBarButtonItem = self.editButtonItem
+        // self.navigationItem.leftBarButtonItem = self.editButtonItem
          self.navigationItem.title = "Pending Todo"
         
     }
+    
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
@@ -44,7 +43,7 @@ class PendingVC: UITableViewController {
             
             // Configure the cell...
             
-            cell.todoLabel.text = pendingArray![indexPath.row] as? String
+            cell.todoLabel.text = pendingArray?[indexPath.row] as? String
             
             return cell
         }else {
@@ -53,6 +52,10 @@ class PendingVC: UITableViewController {
         }
 
     }
+<<<<<<< HEAD
+=======
+
+>>>>>>> MightNotWork
     
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -60,7 +63,6 @@ class PendingVC: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             
-            self.pendingArray!.remove(at: indexPath.row)
             
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
@@ -71,6 +73,7 @@ class PendingVC: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+<<<<<<< HEAD
         let alert = UIAlertController(
             title: "Are you done?",
             message: "are you really sure You are Done?",
@@ -79,6 +82,18 @@ class PendingVC: UITableViewController {
         // Add a "cancel" button to the alert. This one doesn't need a handler
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
         
+=======
+        
+        
+        let alert = UIAlertController(
+            title: "Are you done?",
+            message: "are you really sure You are Done?",
+            preferredStyle: .alert)
+        
+        // Add a "cancel" button to the alert. This one doesn't need a handler
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+>>>>>>> MightNotWork
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
             
             let getDone = self.pendingArray?[indexPath.row]
@@ -98,6 +113,10 @@ class PendingVC: UITableViewController {
         
         // Present the alert to the user
         self.present(alert, animated: true, completion: nil)
+<<<<<<< HEAD
+=======
+        
+>>>>>>> MightNotWork
     }
     
     @IBAction func addToDo(_ sender: Any) {
@@ -135,14 +154,14 @@ class PendingVC: UITableViewController {
         
         // Create new item and add it to the todo items list
         
-        self.pendingArray!.append(title)
+        self.pendingArray?.append(title)
         
         // Tell the table view a new row has been created
         tableView.beginUpdates()
         tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .automatic)
         tableView.endUpdates()
         
-        todo.editPendingDefaults(pendingArray!)
+        todo.editPendingDefaults((pendingArray!))
         
     }
 
