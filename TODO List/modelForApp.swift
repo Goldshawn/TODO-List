@@ -74,7 +74,7 @@ class Model {
     
     private var _todoName: String!
     
-    private var _almostThere = [String]()
+    private var _almostThere = [Any]()
     
     enum toWhere: String {
         case pending = "pending"
@@ -102,10 +102,9 @@ class Model {
         
     }
     
-    func toSwitch(_ currentArray: Array<String>, _ switchCase: toWhere) {
+    func toSwitch(_ currentArray: Array<Any>, _ switchCase: toWhere) {
         if switchCase == .done{
             var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
-            
             tempDoneArray?.append(currentArray)
             
             
@@ -125,6 +124,7 @@ class Model {
         if switchCase == .done {
             
             _almostThere.append(gettingDone)
+            print(_almostThere)
             toSwitch(_almostThere, .done)
             
             print(UserDefaults.standard.array(forKey: "DoneArray")  as Any)
