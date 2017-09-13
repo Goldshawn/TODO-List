@@ -34,7 +34,13 @@ class DoneVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return (doneArray?.count)!
+        if doneArray != nil {
+            
+            return (doneArray!.count)
+            
+        }else{
+            return 1
+        }
     }
 
     
@@ -43,9 +49,10 @@ class DoneVC: UITableViewController {
         if let cell = tableView.dequeueReusableCell(withIdentifier: "doneCell", for: indexPath) as? forTest{
             
              // Configure the cell...
-            if doneArray != nil {
-                cell.todoLabel.text = doneArray?[indexPath.row] as? String
+            if doneArray != nil{
+                cell.todoLabel.text = doneArray![indexPath.row] as? String
             }
+
             return cell
             
         }else {
@@ -98,8 +105,6 @@ class DoneVC: UITableViewController {
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
-            
-            print("Pending Array", UserDefaults.standard.array(forKey: "PendingArray") as Any)
             
             self.todo.editDoneDefaults(self.doneArray!)
             

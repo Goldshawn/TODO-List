@@ -14,17 +14,11 @@ class Todo {
         case pending = "pending"
         case done = "done"
     }
-<<<<<<< HEAD
     
     private var almostThere = [String]()
-    private var _todoName: String!
-=======
->>>>>>> MightNotWork
-    
     private var _todoName: String!
     
     private let myUserDefaults = UserDefaults.standard
-    private var almostThere = [String]()
     
     var todoName: String {
         if _todoName == nil{
@@ -33,13 +27,16 @@ class Todo {
         return _todoName
     }
     
+    init() {
+        UserDefaults.standard.set(["My life"], forKey: "PendingArray")
+    }
     
     func editPendingDefaults(_ currentPending: Array<Any>) {
         
-        var tempPendingArray = UserDefaults.standard.array(forKey: "PendingArray")
-        tempPendingArray?.append(currentPending)
+//        var tempPendingArray = UserDefaults.standard.array(forKey: "PendingArray")
+//        tempPendingArray?.append(currentPending)
         
-        myUserDefaults.set(tempPendingArray, forKey: "PendingArray")
+        myUserDefaults.set(currentPending, forKey: "PendingArray")
         
     }
     
@@ -53,19 +50,6 @@ class Todo {
     }
     
     func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
-<<<<<<< HEAD
-        
-        if switchCase == .done {
-            
-            almostThere.append(gettingDone)
-            editDoneDefaults(almostThere)
-            
-        } else if switchCase == .pending {
-            
-            almostThere.append(gettingDone)
-            editPendingDefaults(almostThere)
-        }
-=======
         
         if switchCase == .done {
             
@@ -82,7 +66,62 @@ class Todo {
 //        _pendingArray.remove(at: indexOf)
 //        editPendingDefaults(currentPending)
 //        editDoneDefaults(currentDone)
->>>>>>> MightNotWork
+        
+    }
+}
+
+class model {
+    
+    private var _todoName: String!
+    
+    private var _almostThere = [String]()
+    
+    enum toWhere: String {
+        case pending = "pending"
+        case done = "done"
+    }
+    
+    var todoName: String {
+        if _todoName == nil{
+            _todoName = ""
+        }
+        return _todoName
+    }
+    
+    private let myUserDefaults = UserDefaults.standard
+    
+    func editPendingDefaults(_ currentPending: Array<String>) {
+        
+        myUserDefaults.set(currentPending, forKey: "PendingArray")
+        
+    }
+    
+    func editDoneDefaults(_ currentDone: Array<String>) {
+        
+        myUserDefaults.set(currentDone, forKey: "DoneArray")
+        
+    }
+    
+    func toSwitch(_ currentArray: Array<String>) {
+        var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
+        
+        tempDoneArray?.append(currentArray)
+        
+        myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
+    }
+    
+    func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
+        
+        if switchCase == .done {
+            
+            _almostThere.append(gettingDone)
+            editDoneDefaults(_almostThere)
+            
+        } else if switchCase == .pending {
+            
+            _almostThere.append(gettingDone)
+            editPendingDefaults(_almostThere)
+        }
         
     }
 }
