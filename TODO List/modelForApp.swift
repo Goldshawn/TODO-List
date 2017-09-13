@@ -102,12 +102,22 @@ class model {
         
     }
     
-    func toSwitch(_ currentArray: Array<String>) {
-        var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
-        
-        tempDoneArray?.append(currentArray)
-        
-        myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
+    func toSwitch(_ currentArray: Array<String>, _ switchCase: toWhere) {
+        if switchCase == .done{
+            var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
+            
+            tempDoneArray?.append(currentArray)
+            
+            
+            myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
+        }else {
+            var tempDoneArray = UserDefaults.standard.array(forKey: "PendingArray")
+            
+            tempDoneArray?.append(currentArray)
+            
+            
+            myUserDefaults.set(tempDoneArray, forKey: "PendingArray")
+        }
     }
     
     func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
@@ -115,12 +125,12 @@ class model {
         if switchCase == .done {
             
             _almostThere.append(gettingDone)
-            editDoneDefaults(_almostThere)
+            toSwitch(_almostThere, .done)
             
         } else if switchCase == .pending {
             
             _almostThere.append(gettingDone)
-            editPendingDefaults(_almostThere)
+            toSwitch(_almostThere, .pending)
         }
         
     }
