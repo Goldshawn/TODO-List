@@ -12,12 +12,13 @@ class TableCellForTODO: UITableViewCell {
 
     @IBOutlet weak var todoLabel: UILabel!
     
-    var todo: Todo!
+    var todo: Model!
     
-    func configureCell (_ todo: Todo){
+    func configureCell (_ todo: Model){
         self.todo = todo
         
-        todoLabel.text = self.todo.todoName
+        
+        //todoLabel.text = self.todo.todoName
     }
 
 }

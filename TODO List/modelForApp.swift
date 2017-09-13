@@ -6,134 +6,97 @@
 //  Copyright © 2017 NextInc. All rights reserved.
 //
 
-import Foundation
-
-class Todo {
-    
-    enum toWhere: String {
-        case pending = "pending"
-        case done = "done"
-    }
-    
-    private var almostThere = [String]()
-    private var _todoName: String!
-    
-    private let myUserDefaults = UserDefaults.standard
-    
-    var todoName: String {
-        if _todoName == nil{
-            _todoName = ""
-        }
-        return _todoName
-    }
-    
-    init() {
-        UserDefaults.standard.set(["My life"], forKey: "PendingArray")
-    }
-    
-    func editPendingDefaults(_ currentPending: Array<Any>) {
-        
-//        var tempPendingArray = UserDefaults.standard.array(forKey: "PendingArray")
-//        tempPendingArray?.append(currentPending)
-        
-        myUserDefaults.set(currentPending, forKey: "PendingArray")
-        
-    }
-    
-    func editDoneDefaults(_ currentDone: Array<Any>) {
-        
-        var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
-        tempDoneArray?.append(currentDone)
-        
-        myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
-        
-    }
-    
-    func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
-        
-        if switchCase == .done {
-            
-            almostThere.append(gettingDone)
-            editDoneDefaults(almostThere)
-            
-        } else if switchCase == .pending {
-            
-            almostThere.append(gettingDone)
-            editPendingDefaults(almostThere)
-        }
-        
-//        _doneArray.append(_pendingArray[indexOf])
-//        _pendingArray.remove(at: indexOf)
-//        editPendingDefaults(currentPending)
-//        editDoneDefaults(currentDone)
-        
-    }
-}
+import UIKit
+import CoreData
 
 class Model {
+
     
-    private var _todoName: String!
-    
-    private var _almostThere = [Any]()
-    
-    enum toWhere: String {
-        case pending = "pending"
-        case done = "done"
+    enum destinationEntity: String{
+        case toDone = "Done"
+        case todo = "Todo"
     }
     
-    var todoName: String {
-        if _todoName == nil{
-            _todoName = ""
-        }
-        return _todoName
-    }
-    
-    private let myUserDefaults = UserDefaults.standard
-    
-    func editPendingDefaults(_ currentPending: Array<String>) {
+    func save(_ name: String, _ theArray: [NSManagedObject], _ Where: destinationEntity) ->[NSManagedObject] {
         
-        myUserDefaults.set(currentPending, forKey: "PendingArray")
-        
-    }
-    
-    func editDoneDefaults(_ currentDone: Array<String>) {
-        
-        myUserDefaults.set(currentDone, forKey: "DoneArray")
-        
-    }
-    
-    func toSwitch(_ currentArray: Array<Any>, _ switchCase: toWhere) {
-        if switchCase == .done{
-            var tempDoneArray = UserDefaults.standard.array(forKey: "DoneArray")
-            tempDoneArray?.append(currentArray)
+        var localArray = theArray
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
+            // 1
+            let managedContext =
+                appDelegate.persistentContainer.viewContext
             
+            // 2
+            let entity =
+                NSEntityDescription.entity(forEntityName: Where.rawValue,
+                                           in: managedContext)!
             
-            myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
-        }else {
-            if var tempDoneArray = UserDefaults.standard.array(forKey: "PendingArray"){
+            let todoItem = NSManagedObject(entity: entity,
+                                           insertInto: managedContext)
+            
+            // 3
+            todoItem.setValue(name, forKeyPath: "title")
+            
+            // 4
+            do {
+                try managedContext.save()
                 
-                tempDoneArray.append(currentArray)
-                
-                myUserDefaults.set(tempDoneArray, forKey: "PendingArray")
+                localArray.append(todoItem)
+            } catch let error as NSError {
+                print("Could not save. \(error), \(error.userInfo)")
             }
         }
+        
+        return localArray
     }
     
-    func SwitchLocal(_ gettingDone: String, _ switchCase: toWhere) {
+    func kindlyDelete(_ indexOf: Int, _ theArray: [NSManagedObject])  -> [NSManagedObject]{
+        // Delete the row from the data source
         
-        if switchCase == .done {
+        var localArray = theArray
+        
+        if let appDelegate = UIApplication.shared.delegate as? AppDelegate {
             
-            _almostThere.append(gettingDone)
-            print(_almostThere)
-            toSwitch(_almostThere, .done)
+            let managedContext = appDelegate.persistentContainer.viewContext
             
-            print(UserDefaults.standard.array(forKey: "DoneArray")  as Any)
+            managedContext.delete(localArray[indexOf] as NSManagedObject)
             
-        } else if switchCase == .pending {
+            localArray.remove(at: indexOf)
             
-            _almostThere.append(gettingDone)
-            toSwitch(_almostThere, .pending)
+            do {
+                try managedContext.save()
+                
+            } catch let error as NSError {
+                
+                print("Could not save. \(error), \(error.userInfo)")
+                
+            }
         }
-        
+        return localArray
     }
+    
+    func goFetch(_ Where: destinationEntity)  -> [NSManagedObject] {
+        var localArray = [NSManagedObject]()
+        
+        if let appDelegate =
+            UIApplication.shared.delegate as? AppDelegate {
+            let managedContext =
+                appDelegate.persistentContainer.viewContext
+            
+            //2
+            let fetchRequest =
+                NSFetchRequest<NSManagedObject>(entityName: Where.rawValue)
+            
+            //3
+            do {
+                
+                localArray = try managedContext.fetch(fetchRequest)
+                
+            } catch let error as NSError {
+                print("Could not fetch. \(error), \(error.userInfo)")
+            }
+
+        }
+        return localArray
+    }
+    
 }

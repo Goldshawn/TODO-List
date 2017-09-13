@@ -16,6 +16,7 @@
 		713EB7B91F6836AC00A56139 /* TableCellForTODO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713EB7B81F6836AC00A56139 /* TableCellForTODO.swift */; };
 		713EB7BC1F68399200A56139 /* modelForApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713EB7BB1F68399200A56139 /* modelForApp.swift */; };
 		713EB7BE1F689A7200A56139 /* forTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 713EB7BD1F689A7200A56139 /* forTest.swift */; };
+		71EA5F271F69083E006411A9 /* coreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 71EA5F251F69083E006411A9 /* coreData.xcdatamodeld */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		713EB7B81F6836AC00A56139 /* TableCellForTODO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TableCellForTODO.swift; sourceTree = "<group>"; };
 		713EB7BB1F68399200A56139 /* modelForApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = modelForApp.swift; sourceTree = "<group>"; };
 		713EB7BD1F689A7200A56139 /* forTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = forTest.swift; sourceTree = "<group>"; };
+		71EA5F261F69083E006411A9 /* coreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = coreData.xcdatamodel; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,6 +71,7 @@
 				713EB7A11F67E00D00A56139 /* Main.storyboard */,
 				713EB7A41F67E00D00A56139 /* Assets.xcassets */,
 				713EB7A61F67E00D00A56139 /* LaunchScreen.storyboard */,
+				71EA5F251F69083E006411A9 /* coreData.xcdatamodeld */,
 			);
 			path = "TODO List";
 			sourceTree = "<group>";
@@ -186,6 +189,7 @@
 				713EB7B91F6836AC00A56139 /* TableCellForTODO.swift in Sources */,
 				713EB7BC1F68399200A56139 /* modelForApp.swift in Sources */,
 				713EB79E1F67E00D00A56139 /* AppDelegate.swift in Sources */,
+				71EA5F271F69083E006411A9 /* coreData.xcdatamodeld in Sources */,
 				713EB7BE1F689A7200A56139 /* forTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -357,6 +361,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		71EA5F251F69083E006411A9 /* coreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				71EA5F261F69083E006411A9 /* coreData.xcdatamodel */,
+			);
+			currentVersion = 71EA5F261F69083E006411A9 /* coreData.xcdatamodel */;
+			path = coreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 713EB7921F67E00D00A56139 /* Project object */;
 }

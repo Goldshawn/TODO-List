@@ -7,22 +7,31 @@
 //
 
 import UIKit
+import CoreData
 
 class DoneVC: UITableViewController {
 
-    var doneArray = UserDefaults.standard.array(forKey: "DoneArray")
+    var doneItems: [NSManagedObject] = []
     
-    let todo = Model()
+    let done = Model()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem()
          self.navigationItem.title = "All Done"
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        tableView.reloadData()
+        
+        doneItems = done.goFetch(.toDone)
     }
 
     // MARK: - Table view data source
@@ -34,25 +43,19 @@ class DoneVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if doneArray != nil {
-            
-            return (doneArray!.count)
-            
-        }else{
-            return 1
-        }
+        
+        return (doneItems.count)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        UserDefaults.standard.synchronize()
+        
+        let doneItem = doneItems[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "doneCell", for: indexPath) as? forTest{
             
-             // Configure the cell...
-            if doneArray != nil{
-                cell.todoLabel.text = doneArray![indexPath.row] as? String
-            }
-
+            // Configure the cell...
+            cell.todoLabel.text = doneItem.value(forKeyPath: "title") as? String
+            
             return cell
             
         }else {
@@ -74,14 +77,13 @@ class DoneVC: UITableViewController {
         if editingStyle == .delete {
             // Delete the row from the data source
             
-            self.doneArray?.remove(at: indexPath.row)
+            // Delete the row from the data source
+            self.doneItems = self.done.kindlyDelete(indexPath.row, doneItems)
             
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
-            
         }
-        todo.editDoneDefaults(doneArray! as! Array<String>)
     }
 
 
@@ -97,16 +99,16 @@ class DoneVC: UITableViewController {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
             
-            let backToPending = self.doneArray?[indexPath.row]
+            let doneItem = self.doneItems[indexPath.row]
+            if let title = doneItem.value(forKeyPath: "title") as? String{
+                _ = self.done.save(title, self.doneItems, .todo)
+            }
             
-            self.todo.SwitchLocal(backToPending as! String, .pending)
-            self.doneArray?.remove(at: indexPath.row)
+            self.doneItems = self.done.kindlyDelete(indexPath.row, self.doneItems)
             
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
-            
-            self.todo.editDoneDefaults(self.doneArray! as! Array<String>)
             
         }))
         

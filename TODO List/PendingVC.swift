@@ -7,10 +7,11 @@
 //
 
 import UIKit
+import CoreData
 
 class PendingVC: UITableViewController {
-
-    var pendingArray = UserDefaults.standard.array(forKey: "PendingArray")
+    
+    var todoItems: [NSManagedObject] = []
     
     let todo = Model()
     
@@ -18,10 +19,19 @@ class PendingVC: UITableViewController {
         super.viewDidLoad()
         
 
+        tableView.reloadData()
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.leftBarButtonItem = self.editButtonItem
          self.navigationItem.title = "Pending Todo"
         
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        tableView.reloadData()
+        
+        todoItems = todo.goFetch(.todo)
     }
     
 
@@ -32,23 +42,18 @@ class PendingVC: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        if pendingArray != nil {
-            
-        return (pendingArray!.count)
-            
-        }else{
-            return 1
-        }
+        
+        return (todoItems.count)
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let todoItem = todoItems[indexPath.row]
         if let cell = tableView.dequeueReusableCell(withIdentifier: "pendingCell", for: indexPath) as? TableCellForTODO{
             
             // Configure the cell...
-            if pendingArray != nil{
-                cell.todoLabel.text = pendingArray![indexPath.row] as? String
-            }
+                cell.todoLabel.text = todoItem.value(forKeyPath: "title") as? String
             
             return cell
         }else {
@@ -63,15 +68,13 @@ class PendingVC: UITableViewController {
         
         if editingStyle == .delete {
             // Delete the row from the data source
-            
-            self.pendingArray?.remove(at: indexPath.row)
+            self.todoItems = self.todo.kindlyDelete(indexPath.row, todoItems)
             
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
             
         }
-        todo.editPendingDefaults((pendingArray)! as! Array<String>)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -86,17 +89,16 @@ class PendingVC: UITableViewController {
         
         alert.addAction(UIAlertAction(title: "Yes", style: .default, handler: { (_) in
             
-            let getDone = self.pendingArray?[indexPath.row]
+            let todoItem = self.todoItems[indexPath.row]
+            if let title = todoItem.value(forKeyPath: "title") as? String{
+                 _ = self.todo.save(title, self.todoItems, .toDone)
+            }
             
-            self.todo.SwitchLocal(getDone as! String, .done)
-            self.pendingArray?.remove(at: indexPath.row)
+            self.todoItems = self.todo.kindlyDelete(indexPath.row, self.todoItems)
             
             tableView.beginUpdates()
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
-            
-            
-            self.todo.editPendingDefaults(self.pendingArray! as! Array<String>)
             
         }))
         
@@ -122,39 +124,19 @@ class PendingVC: UITableViewController {
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { (_) in
             if let title = alert.textFields?[0].text
             {
-                self.addNewToDoItem(title)
+                self.todoItems = self.todo.save(title, self.todoItems, .todo)
             }
+            
+            let index = self.todoItems.count - 1
+            // Tell the table view a new row has been created
+            self.tableView.beginUpdates()
+            self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            self.tableView.endUpdates()
         }))
         
         // Present the alert to the user
         self.present(alert, animated: true, completion: nil)
         
     }
-        
-    
-    private func addNewToDoItem(_ title: String)
-    {
-        // The index of the new item will be the current item count
-        let newIndex: Int
-        
-        if pendingArray != nil {
-            newIndex = pendingArray!.count
-        }else{
-            newIndex = 0
-        }
-        
-        // Create new item and add it to the todo items list
-        
-        self.pendingArray?.append(title)
-        
-        // Tell the table view a new row has been created
-        tableView.beginUpdates()
-        tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .automatic)
-        tableView.endUpdates()
-        
-        todo.editPendingDefaults((pendingArray! as! Array<String>))
-        
-    }
-
 
 }
