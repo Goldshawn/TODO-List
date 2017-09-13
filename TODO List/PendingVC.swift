@@ -12,7 +12,7 @@ class PendingVC: UITableViewController {
 
     var pendingArray = UserDefaults.standard.array(forKey: "PendingArray")
     
-    let todo = Todo()
+    let todo = Model()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,7 +71,7 @@ class PendingVC: UITableViewController {
             tableView.endUpdates()
             
         }
-        todo.editPendingDefaults((pendingArray)!)
+        todo.editPendingDefaults((pendingArray)! as! Array<String>)
     }
 
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -96,7 +96,7 @@ class PendingVC: UITableViewController {
             tableView.endUpdates()
             
             
-            self.todo.editPendingDefaults(self.pendingArray!)
+            self.todo.editPendingDefaults(self.pendingArray! as! Array<String>)
             
         }))
         
@@ -152,7 +152,7 @@ class PendingVC: UITableViewController {
         tableView.insertRows(at: [IndexPath(row: newIndex, section: 0)], with: .automatic)
         tableView.endUpdates()
         
-        todo.editPendingDefaults((pendingArray!))
+        todo.editPendingDefaults((pendingArray! as! Array<String>))
         
     }
 

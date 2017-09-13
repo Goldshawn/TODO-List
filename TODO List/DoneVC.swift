@@ -12,7 +12,7 @@ class DoneVC: UITableViewController {
 
     var doneArray = UserDefaults.standard.array(forKey: "DoneArray")
     
-    let todo = Todo()
+    let todo = Model()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -81,7 +81,7 @@ class DoneVC: UITableViewController {
             tableView.endUpdates()
             
         }
-        todo.editDoneDefaults(doneArray!)
+        todo.editDoneDefaults(doneArray! as! Array<String>)
     }
 
 
@@ -106,7 +106,7 @@ class DoneVC: UITableViewController {
             tableView.deleteRows(at: [indexPath], with: .fade)
             tableView.endUpdates()
             
-            self.todo.editDoneDefaults(self.doneArray!)
+            self.todo.editDoneDefaults(self.doneArray! as! Array<String>)
             
         }))
         

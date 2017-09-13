@@ -131,7 +131,7 @@
         <scene sceneID="CF5-Af-eB3">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="0K5-YS-Ij1" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Pending" id="7sN-N0-nj1"/>
+                    <tabBarItem key="tabBarItem" title="Pending" image="Pending" id="7sN-N0-nj1"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="EZK-IY-QyX">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -155,7 +155,7 @@
         <scene sceneID="hR3-ii-LVh">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="swn-hd-Efd" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Done" id="gdM-yM-3fh"/>
+                    <tabBarItem key="tabBarItem" title="Done" image="Done" id="gdM-yM-3fh"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="0Sk-5Y-S5O">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -172,4 +172,8 @@
             <point key="canvasLocation" x="1158.75" y="492.25352112676057"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Done" width="37" height="37"/>
+        <image name="Pending" width="37" height="37"/>
+    </resources>
 </document>

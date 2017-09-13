@@ -70,7 +70,7 @@ class Todo {
     }
 }
 
-class model {
+class Model {
     
     private var _todoName: String!
     
@@ -111,12 +111,12 @@ class model {
             
             myUserDefaults.set(tempDoneArray, forKey: "DoneArray")
         }else {
-            var tempDoneArray = UserDefaults.standard.array(forKey: "PendingArray")
-            
-            tempDoneArray?.append(currentArray)
-            
-            
-            myUserDefaults.set(tempDoneArray, forKey: "PendingArray")
+            if var tempDoneArray = UserDefaults.standard.array(forKey: "PendingArray"){
+                
+                tempDoneArray.append(currentArray)
+                
+                myUserDefaults.set(tempDoneArray, forKey: "PendingArray")
+            }
         }
     }
     
@@ -126,6 +126,8 @@ class model {
             
             _almostThere.append(gettingDone)
             toSwitch(_almostThere, .done)
+            
+            print(UserDefaults.standard.array(forKey: "DoneArray")  as Any)
             
         } else if switchCase == .pending {
             
