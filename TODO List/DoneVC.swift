@@ -18,7 +18,6 @@ class DoneVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.reloadData()
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
@@ -29,9 +28,10 @@ class DoneVC: UITableViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        tableView.reloadData()
         
         doneItems = done.goFetch(.toDone)
+        
+        tableView.reloadData()
     }
 
     // MARK: - Table view data source

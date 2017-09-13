@@ -18,8 +18,6 @@ class PendingVC: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-
-        tableView.reloadData()
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.leftBarButtonItem = self.editButtonItem
          self.navigationItem.title = "Pending Todo"
@@ -29,9 +27,10 @@ class PendingVC: UITableViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
+        todoItems = todo.goFetch(.todo)
+        
         tableView.reloadData()
         
-        todoItems = todo.goFetch(.todo)
     }
     
 
