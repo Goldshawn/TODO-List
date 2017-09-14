@@ -80,8 +80,8 @@ class DoneVC: UITableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let alert = UIAlertController(
-            title: "Are you done?",
-            message: "are you really sure You are Done?",
+            title: "This would send it to Pending",
+            message: "So you were not done, were you?",
             preferredStyle: .alert)
         
         // Add a "cancel" button to the alert. This one doesn't need a handler

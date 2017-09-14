@@ -80,7 +80,7 @@ class PendingVC: UITableViewController {
         
         let alert = UIAlertController(
             title: "Are you done?",
-            message: "are you really sure You are Done?",
+            message: "Are you sure You are Done?",
             preferredStyle: .alert)
         
         // Add a "cancel" button to the alert. This one doesn't need a handler
@@ -110,7 +110,7 @@ class PendingVC: UITableViewController {
         // Create an alert
         let alert = UIAlertController(
             title: "New to-do item",
-            message: "Insert the title of the new to-do item:",
+            message: "Insert the title of this new item:",
             preferredStyle: .alert)
         
         // Add a text field to the alert for the new item's title
