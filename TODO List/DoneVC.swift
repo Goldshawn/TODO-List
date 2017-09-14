@@ -30,8 +30,7 @@ class DoneVC: UITableViewController {
         super.viewWillAppear(animated)
         
         doneItems = done.goFetch(.toDone)
-        
-        tableView.reloadData()
+        tableView.reloadData(with: .automatic)
     }
 
     // MARK: - Table view data source
@@ -62,15 +61,6 @@ class DoneVC: UITableViewController {
             return UITableViewCell()
         }
     }
-    
-
-    /*
-    // Override to support conditional editing of the table view.
-    override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        // Return false if you do not want the specified item to be editable.
-        return true
-    }
-    */
 
     // Override to support editing the table view.
     override func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -81,7 +71,7 @@ class DoneVC: UITableViewController {
             self.doneItems = self.done.kindlyDelete(indexPath.row, doneItems)
             
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .automatic)
             tableView.endUpdates()
         }
     }
@@ -107,7 +97,7 @@ class DoneVC: UITableViewController {
             self.doneItems = self.done.kindlyDelete(indexPath.row, self.doneItems)
             
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .left)
             tableView.endUpdates()
             
         }))
@@ -116,4 +106,9 @@ class DoneVC: UITableViewController {
         self.present(alert, animated: true, completion: nil)
     }
 
+}
+extension UITableView {
+    func reloadData(with animation: UITableViewRowAnimation) {
+        reloadSections(IndexSet(integersIn: 0..<numberOfSections), with: animation)
+    }
 }

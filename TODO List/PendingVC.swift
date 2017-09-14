@@ -29,7 +29,8 @@ class PendingVC: UITableViewController {
         
         todoItems = todo.goFetch(.todo)
         
-        tableView.reloadData()
+        //tableView.reloadData()
+        tableView.reloadData(with: .automatic)
         
     }
     
@@ -70,7 +71,7 @@ class PendingVC: UITableViewController {
             self.todoItems = self.todo.kindlyDelete(indexPath.row, todoItems)
             
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .bottom)
             tableView.endUpdates()
             
         }
@@ -96,7 +97,7 @@ class PendingVC: UITableViewController {
             self.todoItems = self.todo.kindlyDelete(indexPath.row, self.todoItems)
             
             tableView.beginUpdates()
-            tableView.deleteRows(at: [indexPath], with: .fade)
+            tableView.deleteRows(at: [indexPath], with: .right)
             tableView.endUpdates()
             
         }))
@@ -129,7 +130,7 @@ class PendingVC: UITableViewController {
             let index = self.todoItems.count - 1
             // Tell the table view a new row has been created
             self.tableView.beginUpdates()
-            self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .automatic)
+            self.tableView.insertRows(at: [IndexPath(row: index, section: 0)], with: .top)
             self.tableView.endUpdates()
         }))
         
