@@ -29,7 +29,6 @@ class PendingVC: UITableViewController {
         
         todoItems = todo.goFetch(.todo)
         
-        //tableView.reloadData()
         tableView.reloadData(with: .automatic)
         
     }
